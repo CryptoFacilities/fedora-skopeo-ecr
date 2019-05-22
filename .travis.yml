@@ -1,0 +1,13 @@
+sudo: required
+
+language: generic
+
+services:
+ - docker
+
+if: tag IS present
+
+script:
+ - docker build -t cryptofacilities/fedora-skopeo-ecr:${TRAVIS_TAG} .
+ - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
+ - docker push cryptofacilities/fedora-skopeo-ecr:${TRAVIS_TAG}
